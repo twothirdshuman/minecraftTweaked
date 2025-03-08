@@ -5,7 +5,8 @@ local function checkAndDoFuel()
     end
 end
 
-local toRepeat = {turtle.dig, turtle.up, turtle.dig, turtle.forward, turtle.dig, turtle.down}
+local toRepeat = {turtle.dig, turtle.up, turtle.dig, turtle.forward, 
+    turtle.dig, turtle.down, turtle.dig, turtle.forward}
 
 for l = 0, 100 do
     checkAndDoFuel()
