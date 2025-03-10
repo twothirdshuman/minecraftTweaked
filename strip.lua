@@ -5,6 +5,10 @@ local function checkAndDoFuel()
     end
 end
 
+local function Break()
+    
+end
+
 local toRepeat = {turtle.dig, turtle.up, turtle.dig, turtle.forward, 
     turtle.dig, turtle.down, turtle.dig, turtle.forward}
 
