@@ -1,14 +1,14 @@
 local function tableAsJson(t) 
-    local result
+    local result = {}
 
-    for key, value in ipairs(t) do
+    for key, value in pairs(t) do
         -- prepare json key-value pairs and save them in separate table
         table.insert(result, string.format("\"%s\":%s", key, value))
     end
 
     -- get simple json string
-    result = "{" .. table.concat(result, ",") .. "}"
-    return result
+    local ret = "{" .. table.concat(result, ",") .. "}"
+    return ret
 end
 
 local function checkAndDoFuel() 
