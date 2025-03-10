@@ -14,41 +14,43 @@ end
 local function checkAndDoFuel() 
     local fuelLevel = turtle.getFuelLevel()
     if fuelLevel <= 1 then
-        turtle.refuel(1)
-    end
-end
-
-local function run(func)
-    local result = false
-    while (not result) do
-        result = func()
+        local result = turtle.refuel(1)
+        if (result ~= true) then
+            error("Out of fuel")
+        end
     end
 end
 
 local function dig()
     checkAndDoFuel()
-    run(turtle.dig())
+    turtle.dig()
 end
 
 local function up()
     checkAndDoFuel()
-    run(turtle.up())
+    turtle.up()
 end
 
 local function down()
     checkAndDoFuel()
-    run(turtle.down())
+    turtle.down()
 end
 
 local function forward()
     checkAndDoFuel()
-    run(turtle.forward())
+    turtle.forward()
 end
 
 local function turnRight()
     checkAndDoFuel()
-    run(turtle.turnRight())
+    turtle.turnRight()
 end
+
+local function turnLeft()
+    checkAndDoFuel()
+    turtle.turnLeft()
+end
+
 local function Break()
     local _hasBlock, data = turtle.inspect()
     dig()
@@ -83,17 +85,28 @@ local function Break3High()
     down()
 end
 
-local sideLength = 0
-local sideNr = 0
 while true do
-    for _=0,sideLength do
-        Break3High()
-        forward()
-    end
+    local blockForward = turtle.inspect()
     turnRight()
-
-    if sideNr % 2 == 0 then
-        sideLength = sideLength + 1
+    local blockRight = turtle.inspect()
+    turnRight()
+    local blockBack = turtle.inspect()
+    turnRight()
+    local blockLeft = turtle.inspect()
+    turnRight()
+    if (blockLeft ~= true) then
+        error("Not at edge")
     end
-    sideNr = sideNr + 1
+
+    if (blockForward == false) then
+        turnLeft()
+    end
+
+    if (blockRight == true) then
+        turnRight()
+    end
+
+    Break3High()
+    forward()
+    
 end

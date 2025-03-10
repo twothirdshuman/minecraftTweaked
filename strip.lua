@@ -14,40 +14,36 @@ end
 local function checkAndDoFuel() 
     local fuelLevel = turtle.getFuelLevel()
     if fuelLevel <= 1 then
-        turtle.refuel(1)
-    end
-end
-
-local function run(func)
-    local result = false
-    while (not result) do
-        result = func()
+        local result = turtle.refuel(1)
+        if (result ~= true) then
+            error("Out of fuel")
+        end
     end
 end
 
 local function dig()
     checkAndDoFuel()
-    run(turtle.dig())
+    turtle.dig()
 end
 
 local function up()
     checkAndDoFuel()
-    run(turtle.up())
+    turtle.up()
 end
 
 local function down()
     checkAndDoFuel()
-    run(turtle.down())
+    turtle.down()
 end
 
 local function forward()
     checkAndDoFuel()
-    run(turtle.forward())
+    turtle.forward()
 end
 
 local function turnRight()
     checkAndDoFuel()
-    run(turtle.turnRight())
+    turtle.turnRight()
 end
 
 local function Break()
