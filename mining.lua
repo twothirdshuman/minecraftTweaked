@@ -25,7 +25,7 @@ end
 
 local function up()
     checkAndDoFuel()
-    turtle.uo()
+    turtle.up()
 end
 
 local function down()
