@@ -51,7 +51,7 @@ local function Break()
         dig()
         _hasBlock, data = turtle.inspect()
     end
-    print(tableAsJson(data))
+    -- print(tableAsJson(data))
 end
 
 
@@ -86,7 +86,7 @@ while true do
     end
     turnRight()
 
-    if sideNr % 4 == 0 then
+    if sideNr % 2 == 0 then
         sideLength = sideLength + 1
     end
     sideNr = sideNr + 1
