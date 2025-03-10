@@ -20,6 +20,7 @@ end
 
 local function Break()
     local hasBlock, data = turtle.inspect()
+    print(data["name"] == "minecraft:gravel")
     print(tableAsJson(data))
 end
 
