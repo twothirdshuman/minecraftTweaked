@@ -1,3 +1,16 @@
+local function tableAsJson(t) 
+    local result = {}
+
+    for key, value in pairs(t) do
+        -- prepare json key-value pairs and save them in separate table
+        table.insert(result, string.format("\"%s\":%s", key, value))
+    end
+
+    -- get simple json string
+    local ret = "{" .. table.concat(result, ",") .. "}"
+    return ret
+end
+
 local function checkAndDoFuel() 
     local fuelLevel = turtle.getFuelLevel()
     if fuelLevel <= 1 then
@@ -5,14 +18,74 @@ local function checkAndDoFuel()
     end
 end
 
-local function Break()
-    
+local function run(func)
+    local result = false
+    while (not result) do
+        result = func()
+    end
 end
 
-local toRepeat = {turtle.dig, turtle.up, turtle.dig, turtle.forward, 
-    turtle.dig, turtle.down, turtle.dig, turtle.forward}
-
-for l = 0, 100 do
+local function dig()
     checkAndDoFuel()
-    toRepeat[(l % #toRepeat) + 1]()
+    run(turtle.dig())
+end
+
+local function up()
+    checkAndDoFuel()
+    run(turtle.up())
+end
+
+local function down()
+    checkAndDoFuel()
+    run(turtle.down())
+end
+
+local function forward()
+    checkAndDoFuel()
+    run(turtle.forward())
+end
+
+local function turnRight()
+    checkAndDoFuel()
+    run(turtle.turnRight())
+end
+
+local function Break()
+    local _hasBlock, data = turtle.inspect()
+    dig()
+    while (data["name"] == "minecraft:gravel") do 
+        sleep(5)
+        dig()
+        _hasBlock, data = turtle.inspect()
+    end
+    -- print(tableAsJson(data))
+end
+
+
+
+local function Break3High() 
+    
+    local hasBlock, _data = turtle.inspectUp()
+    if (hasBlock) then
+        error("unexpected block")
+    end
+    Break()
+    up()
+
+    local hasBlock, _data = turtle.inspectUp()
+    if (hasBlock) then
+        error("unexpected block")
+    end
+    Break()
+    up()
+    Break()
+
+    down()
+    down()
+end
+
+
+while true do
+    Break3High()
+    forward()
 end

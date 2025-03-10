@@ -18,31 +18,37 @@ local function checkAndDoFuel()
     end
 end
 
+local function run(func)
+    local result = false
+    while (not result) do
+        result = func()
+    end
+end
+
 local function dig()
     checkAndDoFuel()
-    turtle.dig()
+    run(turtle.dig())
 end
 
 local function up()
     checkAndDoFuel()
-    turtle.up()
+    run(turtle.up())
 end
 
 local function down()
     checkAndDoFuel()
-    turtle.down()
+    run(turtle.down())
 end
 
 local function forward()
     checkAndDoFuel()
-    turtle.forward()
+    run(turtle.forward())
 end
 
 local function turnRight()
     checkAndDoFuel()
-    turtle.turnRight()
+    run(turtle.turnRight())
 end
-
 local function Break()
     local _hasBlock, data = turtle.inspect()
     dig()
