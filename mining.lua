@@ -18,20 +18,76 @@ local function checkAndDoFuel()
     end
 end
 
+local function dig()
+    checkAndDoFuel()
+    turtle.dig()
+end
+
+local function up()
+    checkAndDoFuel()
+    turtle.uo()
+end
+
+local function down()
+    checkAndDoFuel()
+    turtle.down()
+end
+
+local function forward()
+    checkAndDoFuel()
+    turtle.forward()
+end
+
+local function turnRight()
+    checkAndDoFuel()
+    turtle.turnRight()
+end
+
 local function Break()
-    local hasBlock, data = turtle.inspect()
-    print(data["name"] == "minecraft:gravel")
+    local _hasBlock, data = turtle.inspect()
+    dig()
+    while (data["name"] == "minecraft:gravel") do 
+        sleep(5)
+        dig()
+        _hasBlock, data = turtle.inspect()
+    end
     print(tableAsJson(data))
 end
 
---[[
-    local toRepeat = {turtle.dig, turtle.up, turtle.dig, turtle.forward, 
-    turtle.dig, turtle.down, turtle.dig, turtle.forward}
-    
-    for l = 0, 100 do
-        checkAndDoFuel()
-        toRepeat[(l % #toRepeat) + 1]()
-    end
-]]
 
-Break()
+
+local function Break3High() 
+    
+    local hasBlock, _data = turtle.inspectUp()
+    if (hasBlock) then
+        error("unexpected block")
+    end
+    Break()
+    up()
+
+    local hasBlock, _data = turtle.inspectUp()
+    if (hasBlock) then
+        error("unexpected block")
+    end
+    Break()
+    up()
+    Break()
+
+    down()
+    down()
+end
+
+local sideLength = 0
+local sideNr = 0
+while true do
+    for _=0,sideLength do
+        Break3High()
+        forward()
+    end
+    turnRight()
+
+    if sideNr % 4 == 0 then
+        sideLength = sideLength + 1
+    end
+    sideNr = sideNr + 1
+end
