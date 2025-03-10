@@ -36,6 +36,11 @@ local function report_invalid_format(format)
     pp.print("Run '" .. pp.text("help speaker", colours.lightGrey) .. "' for information on supported formats.")
 end
 
+local function playAudio(speaker, buffer)
+    while not speaker.playAudio(buffer) do
+        os.pullEvent("speaker_audio_empty")
+    end
+end 
 
 local cmd = ...
 if cmd == "stop" then
@@ -126,12 +131,17 @@ elseif cmd == "play" then
         end
 
         local buffer = decoder(chunk)
+        local funcs = {}
         for n = 1, #speakers do
-            -- local result = speakers[n].playAudio(buffer)
+            table.insert(funcs, function ()
+                playAudio(speakers[n], buffer)
+            end)
+            --[[ local result = speakers[n].playAudio(buffer)
             while not speakers[n].playAudio(buffer) do
                 os.pullEvent("speaker_audio_empty")
-            end
+            end]]
         end
+        parallel.waitForAll(table.unpack(funcs))
     end
 
     handle.close()
