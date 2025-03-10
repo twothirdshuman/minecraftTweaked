@@ -51,6 +51,11 @@ local function turnLeft()
     turtle.turnLeft()
 end
 
+local function back()
+    checkAndDoFuel()
+    turtle.back()
+end
+
 local function Break()
     local _hasBlock, data = turtle.inspect()
     dig()
@@ -95,7 +100,8 @@ while true do
     local blockLeft = turtle.inspect()
     turnRight()
     if (blockLeft ~= true) then
-        error("Not at edge")
+        back()
+        turnLeft()
     end
 
     if (blockForward == false) then
