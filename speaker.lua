@@ -58,6 +58,10 @@ elseif cmd == "play" then
     if http and file:match("^https?://") then
         print("Downloading...")
         handle, err = http.get(file)
+        local all = handle.readAll()
+        local h = fs.open("tmp", "w");
+        h.write(all)
+        handle, err = fs.open("tmp", "r")
     else
         handle, err = fs.open(shell.resolve(file), "r")
     end
@@ -124,9 +128,13 @@ elseif cmd == "play" then
     local decoder = pcm and pcm_decoder or require "cc.audio.dfpwm".make_decoder()
     local funcs = {}
     for n = 1, #speakers do
+        local pos = handle:seek()
+        local clone = io.open("tmp", "r")
+        clone:seek("set", pos)
+
         table.insert(funcs, function ()
             while true do
-                local chunk = handle.read(size)
+                local chunk = clone.read(size)
                 if not chunk then break end
                 if start then
                     chunk, start = start .. chunk, nil
@@ -138,6 +146,7 @@ elseif cmd == "play" then
                 playAudio(speakers[n], buffer)
                 
             end
+            clone:close()
         end)
         --[[ local result = speakers[n].playAudio(buffer)
         while not speakers[n].playAudio(buffer) do
