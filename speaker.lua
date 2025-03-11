@@ -122,29 +122,31 @@ elseif cmd == "play" then
     print("Playing " .. file)
 
     local decoder = pcm and pcm_decoder or require "cc.audio.dfpwm".make_decoder()
-    while true do
-        local chunk = handle.read(size)
-        if not chunk then break end
-        if start then
-            chunk, start = start .. chunk, nil
-            size = size + 4
-        end
-
-        local buffer = decoder(chunk)
-        local funcs = {}
-        for n = 1, #speakers do
-            table.insert(funcs, function ()
+    local funcs = {}
+    for n = 1, #speakers do
+        table.insert(funcs, function ()
+            while true do
+                local chunk = handle.read(size)
+                if not chunk then break end
+                if start then
+                    chunk, start = start .. chunk, nil
+                    size = size + 4
+                end
+        
+                local buffer = decoder(chunk)
+                -- local funcs = {}
                 playAudio(speakers[n], buffer)
-            end)
-            --[[ local result = speakers[n].playAudio(buffer)
-            while not speakers[n].playAudio(buffer) do
-                os.pullEvent("speaker_audio_empty")
-            end]]
-        end
-        parallel.waitForAll(table.unpack(funcs))
+                
+            end
+        end)
+        --[[ local result = speakers[n].playAudio(buffer)
+        while not speakers[n].playAudio(buffer) do
+            os.pullEvent("speaker_audio_empty")
+        end]]
     end
-
+    parallel.waitForAny(table.unpack(funcs))
     handle.close()
+    sleep(5)
 elseif cmd == "sound" then
     local _, sound, volume, pitch, name = ...
 
