@@ -66,7 +66,7 @@ function turn(reverse)
     if reverse then
         local tmp = main
         main = secondery
-        secondery = main
+        secondery = tmp
     end
     main()
     local has_bloc, _data = turtle.inspect()
