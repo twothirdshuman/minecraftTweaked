@@ -60,28 +60,37 @@ function doLine()
     end
 end
 
-function turn()
-    turtle.turnRight()
+function turn(reverse)
+    local main = turtle.turnRight
+    local secondery = turtle.turnLeft
+    if reverse then
+        local tmp = main
+        main = secondery
+        secondery = main
+    end
+    main()
     local has_bloc, _data = turtle.inspect()
     if (has_bloc) then
-        turtle.turnLeft()
-        turtle.turnLeft()
+        secondery()
+        secondery()
         turtle.forward()
-        turtle.turnLeft()
+        secondery()
         return
     end
     turtle.forward()
-    turtle.turnRight()
+    main()
 end
 
 local blocks = {}
 
+local direction = false
 for layer = 1, 10, 1 do
     for x = 1, 10, 1 do
         doLine()
-        turn()
+        turn(direction)
     end
     turtle.up()
+    direction = not direction
 end
 
 local startpos = {0, 0, 0}
