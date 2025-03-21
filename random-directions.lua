@@ -100,6 +100,7 @@ function down(count)
         doAction(turtle.down)
         doAction(turtle.place)
     end)
+    doAction(turtle.down)
 end
 
 function up(count)
