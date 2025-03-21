@@ -104,15 +104,22 @@ end
 
 function up(count)
     r(count, function ()
-        doAction(turtle.down)
+        doAction(turtle.up)
         doAction(turtle.place)
     end)
 end
 
 local funcs = {down, up, right, left, forward, back}
 
+local lastFunc = 0
 while true do
+    ::start::
     local funcI = math.floor(math.random() * #funcs) + 1
+    local revsereI = funcI + ((funcI % 2) * 2) - 1
+
+    if revsereI == lastFunc then
+        goto start
+    end
     local times = math.ceil(math.random() * 15)
     if funcI == 0 then
         times = math.ceil(times / 2)
