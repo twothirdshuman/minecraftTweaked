@@ -68,16 +68,14 @@ end
 
 local function right(parity) 
     if parity == -1 then
-        left(-parity)
+        turtle.turnLeft()
+        return
     end
     turtle.turnRight()
 end
 
 local function left(parity) 
-    if parity == -1 then
-        right(-parity)
-    end
-    turtle.turnLeft()
+    right(-parity)
 end
 
 
