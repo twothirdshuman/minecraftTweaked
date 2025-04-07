@@ -10,19 +10,19 @@ while true do
     MAX_ITEM_SLOT = MAX_ITEM_SLOT + 1
 end
 
-function doAction(func) 
+local function doAction(func) 
     getStone()
     errOnFalse(func)
 end
 
-function errOnFalse(func)
+local function errOnFalse(func)
     local res = func()
     if res == false then
         error("AAAA")
     end
 end
 
-function getStone()
+local function getStone()
     local block = turtle.getItemDetail()
     if block ~= nil then
         return
@@ -53,21 +53,27 @@ function getStone()
     turtle.select(1)
 end
 
-function back(count) 
+local function r(count, func)
+    for i = 1, count do
+        func()
+    end
+end
+
+local function back(count) 
     r(count, function ()
         doAction(turtle.back)
         doAction(turtle.place)
     end)
 end
 
-function right(parity) 
+local function right(parity) 
     if parity == -1 then
         left(-parity)
     end
     turtle.turnRight()
 end
 
-function left(parity) 
+local function left(parity) 
     if parity == -1 then
         right(-parity)
     end
@@ -76,7 +82,7 @@ end
 
 
 
-function hilbert_curve(A, parity, n) 
+local function hilbert_curve(A, parity, n) 
     if n < 1 then
         return
     end
