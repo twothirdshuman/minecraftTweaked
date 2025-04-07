@@ -10,18 +10,6 @@ while true do
     MAX_ITEM_SLOT = MAX_ITEM_SLOT + 1
 end
 
-local function doAction(func) 
-    getStone()
-    errOnFalse(func)
-end
-
-local function errOnFalse(func)
-    local res = func()
-    if res == false then
-        error("AAAA")
-    end
-end
-
 local function getStone()
     local block = turtle.getItemDetail()
     if block ~= nil then
@@ -51,6 +39,18 @@ local function getStone()
     turtle.select(hasStone)
     turtle.transferTo(1, 64)
     turtle.select(1)
+end
+
+local function doAction(func) 
+    getStone()
+    errOnFalse(func)
+end
+
+local function errOnFalse(func)
+    local res = func()
+    if res == false then
+        error("AAAA")
+    end
 end
 
 local function r(count, func)
