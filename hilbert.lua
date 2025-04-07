@@ -41,16 +41,16 @@ local function getStone()
     turtle.select(1)
 end
 
-local function doAction(func) 
-    getStone()
-    errOnFalse(func)
-end
-
 local function errOnFalse(func)
     local res = func()
     if res == false then
         error("AAAA")
     end
+end
+
+local function doAction(func) 
+    getStone()
+    errOnFalse(func)
 end
 
 local function r(count, func)
