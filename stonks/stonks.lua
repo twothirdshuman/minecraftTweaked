@@ -58,7 +58,10 @@ local function drawToScreen(stockData)
     local blockSizeValue = (max - min) / (height - 1)
 
     for x=1, width do
-        local index = math.floor(#stockData.prices * ((x - 1) / (width - 1))) + 1
+        local index = math.floor(#stockData.prices * ((x - 1) / (width - 1)))
+        if index == 0 then
+            index = 1
+        end
         local priceToDraw = stockData.prices[index]
         if priceToDraw == nil then
             print(#stockData.prices)
