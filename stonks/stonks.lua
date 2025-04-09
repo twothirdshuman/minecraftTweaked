@@ -101,9 +101,9 @@ local function drawToScreen(stockData)
     writeFirstLine(stockData)
     local min, max = getMinMax(stockData.prices)
     local blockSizeValue = (max - min) / (height - 1)
-    local mainColor = color.green
+    local mainColor = colors.green
     if stockData.prices[1] > stockData.prices[#stockData.prices] then
-        mainColor = color.red
+        mainColor = colors.red
     end
 
     for x=1, width do
