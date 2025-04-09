@@ -3,6 +3,7 @@
         "turtle",
         "sleep",
         "http",
-        "textutils"
+        "textutils",
+        "term"
     ]
 }

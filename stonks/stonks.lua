@@ -1,7 +1,37 @@
+local output = term -- assuming term is a valid peripheral
+local width, height = output.getSize()
 
-local res = http.get("https://query1.finance.yahoo.com/v8/finance/chart/%5EOMX?interval=5m&range=5d", {
-    ["User-Agent"] = "Mozilla/5.0 (Minecraft 21.0.1) Stonks/1.0.0"
-})
+---@class Stock
+---@field currency string 
+---@field symbol string 
+---@field prices number[]
 
-print(textutils.serialise(res.getResponseHeaders()))
-print(res.readAll())
+---@param ticker string
+---@param interval string
+---@param range string
+---@return Stock
+local function getStockData(ticker, interval, range)
+    local url = string.format("https://query1.finance.yahoo.com/v8/finance/chart/%s?interval=%s&range=%s",
+        textutils.urlEncode(ticker), interval, range)
+
+    local res = http.get(url, {
+        ["User-Agent"] = "Mozilla/5.0 (Minecraft 21.0.1) Stonks/1.0.0"
+    })
+
+    if not res then error("Failed to fetch data") end
+
+    local resText = res.readAll()
+    local data = textutils.unserializeJSON(resText)
+
+    ---@type Stock
+    local ret = {
+        currency = data.chart.result[1].meta.currency,
+        symbol = data.chart.result[1].meta.symbol,
+        prices = data.chart.result[1].indicators.quote[1].close
+    }
+
+    return ret
+end
+
+local data = getStockData("^OMX", "5m", "5d")
+print(textutils.serializeJSON(data))
