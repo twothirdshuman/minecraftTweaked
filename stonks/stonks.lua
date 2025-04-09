@@ -2,10 +2,17 @@ local output = term -- assuming term is a valid peripheral
 ---@type number, number
 local width, height = output.getSize()
 
+for x=1, width do
+    for y=1, height do
+        paintutils.drawPixel(x, y, colors.black)
+    end
+end
+
 ---@class Stock
 ---@field currency string 
 ---@field symbol string 
 ---@field prices number[]
+---@field name string
 
 ---@param ticker string
 ---@param interval string
@@ -28,7 +35,8 @@ local function getStockData(ticker, interval, range)
     local ret = {
         currency = data.chart.result[1].meta.currency,
         symbol = data.chart.result[1].meta.symbol,
-        prices = data.chart.result[1].indicators.quote[1].close
+        prices = data.chart.result[1].indicators.quote[1].close,
+        name = data.chart.result[1].meta.shortName
     }
 
     return ret
@@ -53,7 +61,14 @@ local function getMinMax(nums)
 end
 
 ---@param stockData Stock
+local function writeFirstLine(stockData) 
+    term.setCursorPos(1, 1)
+    term.write(""..stockData.symbol.." "..stockData.name.." in "..stockData.currency)
+end
+
+---@param stockData Stock
 local function drawToScreen(stockData) 
+    writeFirstLine(stockData)
     local min, max = getMinMax(stockData.prices)
     local blockSizeValue = (max - min) / (height - 1)
 
@@ -71,7 +86,7 @@ local function drawToScreen(stockData)
         local drawY = -y + height
 
         for tmp=drawY, height do
-            paintutils.drawPixel(x, drawY, colors.green)
+            paintutils.drawPixel(x, tmp, colors.green)
         end
     end
 end
