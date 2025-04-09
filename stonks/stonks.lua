@@ -119,7 +119,7 @@ local function drawToScreen(stockData)
         local y = math.floor(((priceToDraw - min) / blockSizeValue) + 0.5) -- rounds
         local drawY = -y + height
         if drawY == 1 then
-            drawY = 0
+            drawY = 2
         end
 
         for tmp=drawY, height do
