@@ -70,7 +70,9 @@ local function drawToScreen(stockData)
         local y = math.floor(((priceToDraw - min) / blockSizeValue) + 0.5) -- rounds
         local drawY = -y + height
 
-        paintutils.drawPixel(x, drawY, colors.green)
+        for tmp=drawY, height do
+            paintutils.drawPixel(x, drawY, colors.green)
+        end
     end
 end
 
