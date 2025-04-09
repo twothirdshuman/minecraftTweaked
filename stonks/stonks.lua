@@ -98,6 +98,10 @@ local function drawToScreen(stockData)
     writeFirstLine(stockData)
     local min, max = getMinMax(stockData.prices)
     local blockSizeValue = (max - min) / (height - 1)
+    local mainColor = color.green
+    if stockData.prices[1] > stockData.prices[#stockData.prices] then
+        mainColor = color.red
+    end
 
     for x=1, width do
         local index = math.floor(#stockData.prices * ((x - 1) / (width - 1)))
@@ -111,9 +115,12 @@ local function drawToScreen(stockData)
         end
         local y = math.floor(((priceToDraw - min) / blockSizeValue) + 0.5) -- rounds
         local drawY = -y + height
+        if drawY == 1 then
+            drawY = 0
+        end
 
         for tmp=drawY, height do
-            paintutils.drawPixel(x, tmp, colors.green)
+            paintutils.drawPixel(x, tmp, mainColor)
         end
     end
 end
