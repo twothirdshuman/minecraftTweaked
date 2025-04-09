@@ -51,7 +51,19 @@ local function getMinMax(nums)
     return min, max
 end
 
-local data = getStockData("^OMX", "5m", "5d")
-local min, max = getMinMax(data.prices)
-print(min)
-print(max)
+---@param stockData Stock
+local function drawToScreen(stockData) 
+    local min, max = getMinMax(stockData.prices)
+    local blockSizeValue = (max - min) / (height - 1)
+
+    for x=1, #width do
+        local index = math.floor(#stockData.prices * ((x - 1) / (#width - 1)))
+        local priceToDraw = stockData.prices[index]
+        local y = math.floor(((priceToDraw - min) / blockSizeValue) + 0.5) -- rounds
+        local drawY = -y + height
+
+        paintutils.drawPixel(x, drawY, colors.green)
+    end
+end
+
+drawToScreen(getStockData("^OMX", "5m", "5d"))

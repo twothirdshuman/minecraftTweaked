@@ -4,6 +4,8 @@
         "sleep",
         "http",
         "textutils",
-        "term"
+        "term",
+        "colors",
+        "paintutils"
     ]
 }
