@@ -2,9 +2,11 @@ local output = term -- assuming term is a valid peripheral
 ---@type number, number
 local width, height = output.getSize()
 
-for x=1, width do
-    for y=1, height do
-        paintutils.drawPixel(x, y, colors.black)
+local function clear() 
+    for x=1, width do
+        for y=1, height do
+            paintutils.drawPixel(x, y, colors.black)
+        end
     end
 end
 
@@ -94,7 +96,8 @@ local function writeFirstLine(stockData)
 end
 
 ---@param stockData Stock
-local function drawToScreen(stockData) 
+local function drawToScreen(stockData)
+    clear()
     writeFirstLine(stockData)
     local min, max = getMinMax(stockData.prices)
     local blockSizeValue = (max - min) / (height - 1)
@@ -125,4 +128,21 @@ local function drawToScreen(stockData)
     end
 end
 
-drawToScreen(getStockData("^OMX", "5m", "5d"))
+while true do
+    drawToScreen(getStockData("^OMX", "5m", "5d"))
+    sleep(60)
+    drawToScreen(getStockData("^SPX", "5m", "5d"))
+    sleep(60)
+    drawToScreen(getStockData("^GSPTSE", "5m", "5d"))
+    sleep(60)
+    drawToScreen(getStockData("^N225", "5m", "5d"))
+    sleep(60)
+    drawToScreen(getStockData("^OMX", "5m", "1d"))
+    sleep(60)
+    drawToScreen(getStockData("^SPX", "5m", "1d"))
+    sleep(60)
+    drawToScreen(getStockData("^GSPTSE", "5m", "1d"))
+    sleep(60)
+    drawToScreen(getStockData("^N225", "5m", "1d"))
+    sleep(60)
+end
