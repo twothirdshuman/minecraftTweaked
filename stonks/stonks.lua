@@ -63,7 +63,18 @@ end
 ---@param stockData Stock
 local function writeFirstLine(stockData) 
     term.setCursorPos(1, 1)
-    term.write(""..stockData.symbol.." "..stockData.name.." in "..stockData.currency)
+    term.setTextColor(colors.white)
+    term.write(stockData.name)
+    term.write(" "..stockData.symbol)
+    local min, max = getMinMax(stockData.prices)
+    term.setTextColor(colors.red)
+    term.write(tostring(math.floor(min)))
+    term.write(" ")
+    term.setTextColor(colors.green)
+    term.write(tostring(math.floor(max)))
+    term.write(" ")
+    term.setTextColor(colors.white)
+    term.write("in "..stockData.currency)
 end
 
 ---@param stockData Stock
