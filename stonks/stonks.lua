@@ -33,5 +33,25 @@ local function getStockData(ticker, interval, range)
     return ret
 end
 
+--- comment
+--- @param nums number[]
+local function getMinMax(nums) 
+    local max = nums[1]
+    local min = nums[1]
+
+    for i=1, #nums do
+        if nums[i] > max then
+            max = nums[i]
+        end
+        if nums[i] < min then
+            min = nums[i]
+        end
+    end
+
+    return min, max
+end
+
 local data = getStockData("^OMX", "5m", "5d")
-print(textutils.serializeJSON(data))
+local min, max = getMinMax(data.prices)
+print(min)
+print(max)
