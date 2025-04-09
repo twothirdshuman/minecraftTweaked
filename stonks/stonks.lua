@@ -66,6 +66,7 @@ local function writeFirstLine(stockData)
     term.setTextColor(colors.white)
     term.write(stockData.name)
     term.write(" "..stockData.symbol)
+    term.write(" ")
     local min, max = getMinMax(stockData.prices)
     term.setTextColor(colors.red)
     term.write(tostring(math.floor(min)))
@@ -75,6 +76,21 @@ local function writeFirstLine(stockData)
     term.write(" ")
     term.setTextColor(colors.white)
     term.write("in "..stockData.currency)
+    term.write(" ")
+
+    if stockData.prices[1] > stockData.prices[#stockData.prices] then
+        term.write("DOWN")
+        local multiply = stockData.prices[1] / stockData.prices[#stockData.prices]
+        local percent = math.abs(multiply - 1) * 100
+        term.setTextColor(colors.red)
+        term.write(" "..string.sub(tostring(percent), 1, 4).."% ")
+    else 
+        term.write("UP")
+        local multiply = stockData.prices[1] / stockData.prices[#stockData.prices]
+        local percent = math.abs(multiply - 1) * 100
+        term.setTextColor(colors.green)
+        term.write(" "..string.sub(tostring(percent), 1, 4).."% ")
+    end
 end
 
 ---@param stockData Stock
