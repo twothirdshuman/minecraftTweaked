@@ -33,6 +33,20 @@ local function getStockData(ticker, interval, range)
     local resText = res.readAll()
     local data = textutils.unserializeJSON(resText)
 
+    local prices = {}
+    for i=1,#data.chart.result[1].indicators.quote[1].close do 
+        if data.chart.result[1].indicators.quote[1].close[i] == nil then
+            for j=i,1,-1 do
+                if data.chart.result[1].indicators.quote[1].close[j] ~= nil then
+                    table.insert(prices, data.chart.result[1].indicators.quote[1].close[j])
+                    break
+                end
+            end
+        else 
+            table.insert(prices, data.chart.result[1].indicators.quote[1].close[i])
+        end
+    end
+
     ---@type Stock
     local ret = {
         currency = data.chart.result[1].meta.currency,
