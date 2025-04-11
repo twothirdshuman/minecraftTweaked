@@ -142,21 +142,9 @@ local function drawToScreen(stockData)
     end
 end
 
+local ticker, interval, range = ... 
+
 while true do
-    drawToScreen(getStockData("^OMX", "5m", "5d"))
-    sleep(60)
-    drawToScreen(getStockData("^SPX", "5m", "5d"))
-    sleep(60)
-    drawToScreen(getStockData("^GSPTSE", "5m", "5d"))
-    sleep(60)
-    drawToScreen(getStockData("^N225", "5m", "5d"))
-    sleep(60)
-    drawToScreen(getStockData("^OMX", "5m", "1d"))
-    sleep(60)
-    drawToScreen(getStockData("^SPX", "5m", "1d"))
-    sleep(60)
-    drawToScreen(getStockData("^GSPTSE", "5m", "1d"))
-    sleep(60)
-    drawToScreen(getStockData("^N225", "5m", "1d"))
-    sleep(60)
+    drawToScreen(getStockData(ticker, interval, range))
+    sleep(600)
 end
