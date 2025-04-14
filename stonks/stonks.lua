@@ -55,7 +55,7 @@ local function getStockData(ticker, interval, range)
         currency = data.chart.result[1].meta.currency,
         symbol = data.chart.result[1].meta.symbol,
         prices = prices,
-        name = data.chart.result[1].meta.shortName
+        name = data.chart.result[1].meta.shortName.gsub("%s+", " ")
     }
 
     return ret
