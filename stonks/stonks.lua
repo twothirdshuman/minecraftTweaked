@@ -140,7 +140,7 @@ local function drawToScreen(stockData)
         end
 
         for tmp=drawY, height do
-            output.setTextColor(mainColor)
+            output.setBackgroundColor(mainColor)
             output.setCursorPos(x, tmp)
             output.write(" ")
             -- paintutils.drawPixel(x, tmp, mainColor)
