@@ -1,11 +1,14 @@
-local output = term -- assuming term is a valid peripheral
----@type number, number
-local width, height = output.getSize()
+local monitor, ticker, interval, range = ... 
 
+local output = peripheral.wrap(monitor) -- assuming term is a valid peripheral
+---@type number, number
+output.setTextScale(1.5)
+local width, height = output.getSize()
 local function clear() 
     for x=1, width do
         for y=1, height do
-            paintutils.drawPixel(x, y, colors.black)
+            output.clear()
+            -- paintutils.drawPixel(x, y, colors.black)
         end
     end
 end
@@ -137,12 +140,15 @@ local function drawToScreen(stockData)
         end
 
         for tmp=drawY, height do
-            paintutils.drawPixel(x, tmp, mainColor)
+            output.setTextColor(mainColor)
+            output.setCursorPos(x, tmp)
+            output.write(" ")
+            -- paintutils.drawPixel(x, tmp, mainColor)
         end
     end
 end
 
-local ticker, interval, range = ... 
+
 
 while true do
     drawToScreen(getStockData(ticker, interval, range))
