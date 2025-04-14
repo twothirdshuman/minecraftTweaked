@@ -143,6 +143,7 @@ local function drawToScreen(stockData)
             output.setBackgroundColor(mainColor)
             output.setCursorPos(x, tmp)
             output.write(" ")
+            output.setBackgroundColor(colors.black)
             -- paintutils.drawPixel(x, tmp, mainColor)
         end
     end
