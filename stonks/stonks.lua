@@ -2,7 +2,7 @@ local monitor, ticker, interval, range = ...
 
 local output = peripheral.wrap(monitor) 
 ---@type number, number
-output.setTextScale(1.5)
+output.setTextScale(1.8)
 local width, height = output.getSize()
 local function clear() 
     for x=1, width do
@@ -85,16 +85,6 @@ local function writeFirstLine(stockData)
     output.setTextColor(colors.white)
     output.write(stockData.name)
     output.write(" "..stockData.symbol)
-    output.write(" ")
-    local min, max = getMinMax(stockData.prices)
-    output.setTextColor(colors.red)
-    output.write(tostring(math.floor(min)))
-    output.write(" ")
-    output.setTextColor(colors.green)
-    output.write(tostring(math.floor(max)))
-    output.write(" ")
-    output.setTextColor(colors.white)
-    output.write("in "..stockData.currency)
     output.write(" ")
 
     if stockData.prices[1] > stockData.prices[#stockData.prices] then
