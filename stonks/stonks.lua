@@ -49,13 +49,13 @@ local function getStockData(ticker, interval, range)
             table.insert(prices, data.chart.result[1].indicators.quote[1].close[i])
         end
     end
-
+    
     ---@type Stock
     local ret = {
         currency = data.chart.result[1].meta.currency,
         symbol = data.chart.result[1].meta.symbol,
         prices = prices,
-        name = data.chart.result[1].meta.shortName.gsub("%s+", " ")
+        name = string.gsub(data.chart.result[1].meta.shortName, " +", " ")
     }
 
     return ret
