@@ -1,6 +1,6 @@
 local monitor, ticker, interval, range = ... 
 
-local output = peripheral.wrap(monitor) -- assuming term is a valid peripheral
+local output = peripheral.wrap(monitor) 
 ---@type number, number
 output.setTextScale(1.5)
 local width, height = output.getSize()
@@ -81,34 +81,34 @@ end
 
 ---@param stockData Stock
 local function writeFirstLine(stockData) 
-    term.setCursorPos(1, 1)
-    term.setTextColor(colors.white)
-    term.write(stockData.name)
-    term.write(" "..stockData.symbol)
-    term.write(" ")
+    output.setCursorPos(1, 1)
+    output.setTextColor(colors.white)
+    output.write(stockData.name)
+    output.write(" "..stockData.symbol)
+    output.write(" ")
     local min, max = getMinMax(stockData.prices)
-    term.setTextColor(colors.red)
-    term.write(tostring(math.floor(min)))
-    term.write(" ")
-    term.setTextColor(colors.green)
-    term.write(tostring(math.floor(max)))
-    term.write(" ")
-    term.setTextColor(colors.white)
-    term.write("in "..stockData.currency)
-    term.write(" ")
+    output.setTextColor(colors.red)
+    output.write(tostring(math.floor(min)))
+    output.write(" ")
+    output.setTextColor(colors.green)
+    output.write(tostring(math.floor(max)))
+    output.write(" ")
+    output.setTextColor(colors.white)
+    output.write("in "..stockData.currency)
+    output.write(" ")
 
     if stockData.prices[1] > stockData.prices[#stockData.prices] then
-        term.write("DOWN")
+        output.write("DOWN")
         local multiply = stockData.prices[1] / stockData.prices[#stockData.prices]
         local percent = math.abs(multiply - 1) * 100
-        term.setTextColor(colors.red)
-        term.write(" "..string.sub(tostring(percent), 1, 4).."% ")
+        output.setTextColor(colors.red)
+        output.write(" "..string.sub(tostring(percent), 1, 4).."% ")
     else 
-        term.write("UP")
+        output.write("UP")
         local multiply = stockData.prices[1] / stockData.prices[#stockData.prices]
         local percent = math.abs(multiply - 1) * 100
-        term.setTextColor(colors.green)
-        term.write(" "..string.sub(tostring(percent), 1, 4).."% ")
+        output.setTextColor(colors.green)
+        output.write(" "..string.sub(tostring(percent), 1, 4).."% ")
     end
 end
 
