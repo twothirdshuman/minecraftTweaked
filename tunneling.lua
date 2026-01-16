@@ -63,8 +63,13 @@ local function Break()
 end
 
 -- Break a 3-high vertical section
-local function Break3High() 
+local function Break4High() 
     local has, _ = turtle.inspectUp()
+    if has then error("unexpected block") end
+    Break()
+    up()
+
+    has, _ = turtle.inspectUp()
     if has then error("unexpected block") end
     Break()
     up()
@@ -76,6 +81,7 @@ local function Break3High()
 
     Break()
 
+    down()
     down()
     down()
 end
@@ -90,32 +96,34 @@ local TUNNEL_HEIGHT = 4    -- floor ↕ ceiling
 while true do
     -- Dig one forward slice of the tunnel
     -- For width: move left→right, digging each column
-    for col = 1, TUNNEL_WIDTH do
-        -- Dig a full column (height)
-        for h = 1, TUNNEL_HEIGHT do
-            Break3High()
-            if h < TUNNEL_HEIGHT then forward() end
-        end
 
-        -- Return to ground level at the start of this column
-        for h = 1, (TUNNEL_HEIGHT - 1) do back() end
-
-        -- Move to next column horizontally
-        if col < TUNNEL_WIDTH then
-            turnRight()
-            Break()
-            forward()
-            turnLeft()
-        end
-    end
-
-    -- Return horizontally to the left side
-    for i = 1, (TUNNEL_WIDTH - 1) do
-        turnLeft()
-        back()
-        turnRight()
-    end
-
-    -- Advance to the next slice forward
+    Break4High()
+    turnRight()
     forward()
+    turnLeft()
+
+    Break4High()
+    turnRight()
+    forward()
+    turnLeft()
+
+    Break4High()
+    turnRight()
+    forward()
+    turnLeft()
+
+    Break4High()
+    turnRight()
+    forward()
+    turnLeft()
+
+    Break4High()
+    
+    forward()
+    turnLeft()
+    forward()
+    forward()
+    forward()
+    forward()
+    turnRight()
 end
