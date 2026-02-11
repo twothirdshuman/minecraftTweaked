@@ -3,7 +3,7 @@ local function checkAndDoFuel()
     if fuelLevel <= 1 then
         local result = false
         local i = 0
-        while (~result) do 
+        while (not result) do 
             result = turtle.refuel(1)
             if (result ~= true) then
                 print("Out of fuel for "..i / 12.." minutes")
@@ -161,7 +161,7 @@ local function doArm()
     forward()
 end
 
-local function fillingLogic() do
+local function fillingLogic()
     -- if nothing go right
     -- if can't go right go forward
     -- if only one direction go there
