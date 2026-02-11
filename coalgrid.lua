@@ -161,7 +161,7 @@ local function doArm()
     forward()
 end
 
-local function fillingLogic()
+local function fillingLogic(isBacking)
     -- if nothing go right
     -- if can't go right go forward
     -- if only one direction go there
@@ -191,10 +191,17 @@ local function fillingLogic()
         return
     end
 
+    if (isBacking) then
+        turnRight()
+        doArm()
+        return
+    end
+
     turnLeft()
     doArm()
+    fillingLogic(true)
 end
 
 while (true) do
-    fillingLogic()
+    fillingLogic(false)
 end
