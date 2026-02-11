@@ -6,7 +6,7 @@ local function checkAndDoFuel()
         while (not result) do 
             result = turtle.refuel(1)
             if (result ~= true) then
-                print("Out of fuel for "..i / 12.." minutes")
+                print("Out of fuel for "..(i / 12).." minutes")
                 sleep(5)
             end
             i = i + 1
