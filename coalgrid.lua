@@ -50,17 +50,26 @@ local function back()
 end
 
 local function Break()
-    local hasBlock, data = turtle.inspect()
-    if (hasBlock) then
+    while true do
+        local hasBlock, data = turtle.inspect()
+        if not hasBlock then
+            break
+        end
+
         dig()
+
+        -- If the block is gravel, keep checking until it's gone
+        while data.name == "minecraft:gravel" do
+            sleep(0.5)  -- short delay so gravel has time to fall
+            dig()
+            hasBlock, data = turtle.inspect()
+            if not hasBlock then
+                break
+            end
+        end
     end
-    while (data["name"] == "minecraft:gravel") do 
-        sleep(5)
-        dig()
-        _hasBlock, data = turtle.inspect()
-    end
-    -- print(tableAsJson(data))
 end
+
 
 --- Coal grid
 --- -----#----------#-----
@@ -194,6 +203,7 @@ local function fillingLogic(isBacking)
     if (isBacking) then
         turnRight()
         doArm()
+        fillingLogic(true)
         return
     end
 
